@@ -1,0 +1,33 @@
+name: Template Sync
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  REPOSITORIES: |
+    AAInternal/tnt-support
+    
+  WORKFLOW_FILES: |
+    .github/workflows/create-labels.yml
+    .github/workflows/remove-project-issues.yml
+    .github/workflows/triage-project-issues.yml
+    .github/ISSUE_TEMPLATE
+    .github/ABOUTME.md
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # https://github.com/varunsridharan/action-github-workflow-sync
+      - name: Running Workflow Sync
+        if: github.repository == 'AAInternal/support-repo-template'
+        uses: aadependencies/action-github-workflow-sync@3.0
+        with:
+          REPOSITORIES: ${{ env.REPOSITORIES }}
+          WORKFLOW_FILES: ${{ env.WORKFLOW_FILES }}
+          GITHUB_TOKEN: ${{ secrets.DOGGYWRITE }}

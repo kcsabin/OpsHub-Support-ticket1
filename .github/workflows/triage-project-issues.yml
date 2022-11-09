@@ -1,0 +1,47 @@
+name: Triage Issues to Product Kanban Boards
+
+on:
+  issues:
+    types:
+      - labeled
+
+jobs:
+  triage-issues:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # https://github.com/alex-page/github-project-automation-plus
+      # Use issue webhooks to automate project cards
+      - name: Triage Project Cards for Bug
+        if: contains(github.event.label.name, 'bug')
+        uses: aadependencies/github-project-automation-plus@v0.5.1
+        with:
+          project: TnT Support Kanban
+          column: To do
+          repo-token: ${{ secrets.AAINTERNAL_READONLY_PAT }}
+
+      - name: Triage Project Cards for Service Request
+        if: contains(github.event.label.name, 'service-request')
+        uses: aadependencies/github-project-automation-plus@v0.5.1
+        with:
+          project: TnT Support Kanban
+          column: To do
+          repo-token: ${{ secrets.AAINTERNAL_READONLY_PAT }}
+
+      - name: Triage Project Cards for Feature Request
+        if: contains(github.event.label.name, 'feature-request')
+        uses: aadependencies/github-project-automation-plus@v0.5.1
+        with:
+          project: TnT Support Kanban
+          column: To do
+          repo-token: ${{ secrets.AAINTERNAL_READONLY_PAT }}
+          
+      - name: Triage Project Cards for Questions
+        if: contains(github.event.label.name, 'question')
+        uses: aadependencies/github-project-automation-plus@v0.5.1
+        with:
+          project: TnT Support Kanban
+          column: To do
+          repo-token: ${{ secrets.AAINTERNAL_READONLY_PAT }}

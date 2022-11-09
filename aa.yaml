@@ -1,0 +1,5 @@
+apiVersion: 0.2.3
+cmdAppShortName:
+- DevOpsTool
+squads:
+- 1302960 # Geek Gurus
